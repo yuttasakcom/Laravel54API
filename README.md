@@ -17,6 +17,7 @@ build & run docker
 
 install package
 > cd www/api && composer install --prefer-dist -vvv
+
 or
 > docker exec lara composer install --prefer-dist -vvv
 
