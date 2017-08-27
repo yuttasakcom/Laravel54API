@@ -1,22 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Seller;
+namespace App\Http\Controllers\Buyer;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use App\Seller;
+use App\Buyer;
 
-class SellerController extends ApiController
+class BuyerCategoryController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Buyer $buyer)
     {
-        $sellers = Seller::has('products')->get();
-        return $this->showAll($sellers);
+        $categories = $buyer->transactions()->with('product.categories')
+        ->get()
+        ->pluck('product.categories')
+        ->collapse()
+        ->unique('id')
+        ->values();
+        return $this->showAll($categories);
     }
 
     /**
@@ -46,9 +51,9 @@ class SellerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Seller $seller)
+    public function show($id)
     {
-        return $this->showOne($seller);
+        //
     }
 
     /**
