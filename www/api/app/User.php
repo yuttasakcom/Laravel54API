@@ -5,19 +5,20 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Transformers\UserTransformer;
 
 class User extends Authenticatable
 {
     use Notifiable, SoftDeletes;
-    protected $dates = ['deleted_at'];
 
     const VERIFIED_USER = '1';
     const UNVERIFIED_USER = '0';
     const ADMIN_USER = 'true';
     const REGULAR_USER = 'false';
 
+    public $transformer = UserTransformer::class;
     protected $table = 'users';
-
+    protected $dates = ['deleted_at'];
     /**
      * The attributes that are mass assignable.
      *
