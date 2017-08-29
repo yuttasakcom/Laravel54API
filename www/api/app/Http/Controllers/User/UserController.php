@@ -12,8 +12,8 @@ class UserController extends ApiController
 {
     public function __construct()
     {
-        parent::__construct();
-
+        $this->middleware('client.credentials')->only(['store', 'resend']);
+        $this->middleware('auth:api')->except(['store', 'verify', 'resend']);
         $this->middleware('transform.input:' . UserTransformer::class)->only(['store', 'update']);
     }
     
@@ -26,16 +26,6 @@ class UserController extends ApiController
     {
         $users = User::all();
         return $this->showAll($users);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -75,18 +65,7 @@ class UserController extends ApiController
     {
         return $this->showOne($user);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
+    
     /**
      * Update the specified resource in storage.
      *
