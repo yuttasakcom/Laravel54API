@@ -22,6 +22,8 @@ class TransactionController extends ApiController
      */
     public function index()
     {
+        $this->allowedAdminAction();
+        
         return $this->showAll(Transaction::all());
     }
 
