@@ -11,11 +11,11 @@ use App\Transformers\TransactionTransformer;
 
 class ProductBuyerTransactionController extends ApiController
 {
-    public function __construc()
+    public function __construct()
     {
-        parent::__construc();
+        parent::__construct();
 
-        $this->middleware('transform.input' . TransactionTransformer::class)->only(['store']);
+        $this->middleware('transform.input:' . TransactionTransformer::class)->only(['store']);
         $this->middleware('scope:purchase-product')->only(['store']);
     }
 
